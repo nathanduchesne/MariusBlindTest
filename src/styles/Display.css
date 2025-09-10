@@ -1,0 +1,285 @@
+.display-container {
+  min-height: 100vh;
+  padding: 1rem;
+  background-color: #1e1e1e;
+  color: white;
+}
+
+.display-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid #444;
+}
+
+.display-header h1 {
+  margin: 0;
+  font-size: 2.5rem;
+  color: #fff;
+  text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+}
+
+.buzzer-status {
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  font-weight: bold;
+  font-size: 1.2rem;
+}
+
+.buzzer-status.enabled {
+  background-color: #4CAF50;
+}
+
+.buzzer-status.disabled {
+  background-color: #f44336;
+}
+
+.display-content {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+}
+
+.scores-section,
+.buzzer-order-section {
+  background-color: #2d2d2d;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+  padding: 1.5rem;
+}
+
+.scores-section h2,
+.buzzer-order-section h2 {
+  margin-top: 0;
+  margin-bottom: 1.5rem;
+  color: #fff;
+  border-bottom: 1px solid #444;
+  padding-bottom: 0.5rem;
+  font-size: 1.8rem;
+  text-align: center;
+}
+
+.podium {
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  margin-bottom: 2rem;
+  height: 200px;
+}
+
+.podium-position {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 0 10px;
+  transition: all 0.3s;
+}
+
+.position-1 {
+  width: 120px;
+  height: 180px;
+  background-color: #ffd700; /* Gold */
+  z-index: 3;
+  order: 2;
+}
+
+.position-2 {
+  width: 100px;
+  height: 140px;
+  background-color: #c0c0c0; /* Silver */
+  z-index: 2;
+  order: 1;
+}
+
+.position-3 {
+  width: 100px;
+  height: 100px;
+  background-color: #cd7f32; /* Bronze */
+  z-index: 1;
+  order: 3;
+}
+
+.position-number {
+  position: absolute;
+  top: -40px;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: #333;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  font-size: 1.5rem;
+}
+
+.podium-team-name {
+  color: #333;
+  font-weight: bold;
+  text-align: center;
+  padding: 0.5rem;
+  font-size: 1.2rem;
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.podium-team-score {
+  color: #333;
+  font-weight: bold;
+  font-size: 2rem;
+}
+
+.teams-list,
+.buzzer-order-list {
+  max-height: calc(100vh - 400px);
+  overflow-y: auto;
+}
+
+.team-item {
+  display: flex;
+  align-items: center;
+  padding: 0.8rem;
+  border-bottom: 1px solid #444;
+  transition: background-color 0.3s;
+}
+
+.team-item:hover {
+  background-color: #3d3d3d;
+}
+
+.team-rank {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background-color: #555;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  margin-right: 1rem;
+}
+
+.team-name {
+  flex: 1;
+  font-weight: bold;
+  font-size: 1.2rem;
+  display: flex;
+  align-items: center;
+}
+
+.buzzed-indicator {
+  margin-left: 10px;
+  background-color: #f44336;
+  color: white;
+  padding: 2px 8px;
+  border-radius: 10px;
+  font-size: 0.8rem;
+}
+
+.team-score {
+  font-size: 1.5rem;
+  font-weight: bold;
+  margin-left: 1rem;
+}
+
+.buzzer-entry {
+  display: flex;
+  align-items: center;
+  padding: 1rem;
+  border-bottom: 1px solid #444;
+  transition: background-color 0.3s;
+  animation: fadeIn 0.5s;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.buzzer-entry:first-child {
+  background-color: rgba(76, 175, 80, 0.2);
+}
+
+.buzzer-rank {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: #2196F3;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  margin-right: 1rem;
+  font-size: 1.2rem;
+}
+
+.buzzer-entry:first-child .buzzer-rank {
+  background-color: #4CAF50;
+  width: 50px;
+  height: 50px;
+  font-size: 1.5rem;
+}
+
+.buzzer-team-name {
+  flex: 1;
+  font-weight: bold;
+  font-size: 1.5rem;
+}
+
+.buzzer-entry:first-child .buzzer-team-name {
+  font-size: 1.8rem;
+  color: #4CAF50;
+}
+
+.buzzer-time {
+  color: #aaa;
+  font-family: monospace;
+  font-size: 1.2rem;
+}
+
+.no-buzzes {
+  color: #888;
+  font-style: italic;
+  text-align: center;
+  padding: 2rem;
+  font-size: 1.2rem;
+}
+
+@media (max-width: 768px) {
+  .display-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1rem;
+  }
+  
+  .display-content {
+    grid-template-columns: 1fr;
+  }
+  
+  .podium {
+    height: 150px;
+  }
+  
+  .position-1 {
+    width: 100px;
+    height: 140px;
+  }
+  
+  .position-2 {
+    width: 80px;
+    height: 110px;
+  }
+  
+  .position-3 {
+    width: 80px;
+    height: 80px;
+  }
+}
