@@ -52,6 +52,7 @@ export const SocketProvider = ({ children }) => {
       if (currentTeam) {
         setCurrentTeam(prev => ({ ...prev, buzzed: false }));
       }
+      setBuzzerEnabled(true);
     });
 
     // Cleanup on unmount
@@ -71,13 +72,6 @@ export const SocketProvider = ({ children }) => {
   const buzz = () => {
     if (socket && currentTeam && buzzerEnabled && !currentTeam.buzzed) {
       socket.emit('buzz', currentTeam.id);
-    }
-  };
-
-  // Admin functions
-  const setBuzzerState = (enabled) => {
-    if (socket) {
-      socket.emit('setBuzzerState', enabled);
     }
   };
 
@@ -107,7 +101,6 @@ export const SocketProvider = ({ children }) => {
     currentTeam,
     registerTeam,
     buzz,
-    setBuzzerState,
     resetBuzzers,
     updateScore,
     removeFromBuzzerOrder

@@ -60,20 +60,34 @@ const Display = () => {
             {buzzerOrder.length === 0 ? (
               <p className="no-buzzes">Waiting for teams to buzz in...</p>
             ) : (
-              buzzerOrder.map((entry, index) => (
-                <div key={index} className="buzzer-entry">
-                  <div className="buzzer-rank">{index + 1}</div>
-                  <div className="buzzer-team-name">{entry.teamName}</div>
-                  <div className="buzzer-time">
-                    {new Date(entry.timestamp).toLocaleTimeString([], {
-                      hour: '2-digit',
-                      minute: '2-digit',
-                      second: '2-digit',
-                      fractionalSecondDigits: 3
-                    })}
+              buzzerOrder.map((entry, index) => {
+                // Calculate time difference if not the first entry
+                const firstBuzzTime = buzzerOrder[0].timestamp;
+                const timeDiff = index === 0 
+                  ? null 
+                  : ((entry.timestamp - firstBuzzTime) / 1000).toFixed(3);
+                
+                return (
+                  <div key={index} className="buzzer-entry">
+                    <div className="buzzer-rank">{index + 1}</div>
+                    <div className="buzzer-team-name">{entry.teamName}</div>
+                    <div className="buzzer-time">
+                      {index === 0 ? (
+                        // First team shows actual time
+                        new Date(entry.timestamp).toLocaleTimeString([], {
+                          hour: '2-digit',
+                          minute: '2-digit',
+                          second: '2-digit',
+                          fractionalSecondDigits: 3
+                        })
+                      ) : (
+                        // Other teams show time difference
+                        `+${timeDiff}s`
+                      )}
+                    </div>
                   </div>
-                </div>
-              ))
+                );
+              })
             )}
           </div>
         </div>

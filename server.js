@@ -21,7 +21,7 @@ const io = new Server(server, {
 
 // Game state
 let teams = [];
-let buzzerEnabled = false;
+let buzzerEnabled = true; // Always enabled by default
 let buzzerOrder = [];
 
 // Socket.io connection
@@ -77,11 +77,6 @@ io.on('connection', (socket) => {
     io.emit('teamsUpdated', teams);
   });
   
-  // Admin enables/disables buzzers
-  socket.on('setBuzzerState', (enabled) => {
-    buzzerEnabled = enabled;
-    io.emit('buzzerStateChanged', enabled);
-  });
   
   // Admin resets buzzers
   socket.on('resetBuzzers', () => {
@@ -90,9 +85,14 @@ io.on('connection', (socket) => {
       team.buzzed = false;
     });
     
-    io.emit('buzzersReset');
-    io.emit('buzzerOrderUpdated', buzzerOrder);
+    // Enable buzzers when resetting
+    buzzerEnabled = true;
+    
+    // Send events in the correct order
     io.emit('teamsUpdated', teams);
+    io.emit('buzzerStateChanged', buzzerEnabled);
+    io.emit('buzzerOrderUpdated', buzzerOrder);
+    io.emit('buzzersReset');
   });
   
   // Admin updates score

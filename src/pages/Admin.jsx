@@ -5,9 +5,7 @@ import '../styles/Admin.css';
 const Admin = () => {
   const { 
     teams, 
-    buzzerEnabled, 
     buzzerOrder, 
-    setBuzzerState, 
     resetBuzzers, 
     updateScore,
     removeFromBuzzerOrder
@@ -56,10 +54,6 @@ const Admin = () => {
     );
   }
 
-  const handleToggleBuzzer = () => {
-    setBuzzerState(!buzzerEnabled);
-  };
-
   const handleResetBuzzers = () => {
     resetBuzzers();
   };
@@ -80,12 +74,6 @@ const Admin = () => {
       <div className="admin-header">
         <h1>DJ Admin Console</h1>
         <div className="admin-controls">
-          <button 
-            className={`buzzer-toggle ${buzzerEnabled ? 'enabled' : 'disabled'}`}
-            onClick={handleToggleBuzzer}
-          >
-            {buzzerEnabled ? 'Disable Buzzers' : 'Enable Buzzers'}
-          </button>
           <button 
             className="reset-button"
             onClick={handleResetBuzzers}

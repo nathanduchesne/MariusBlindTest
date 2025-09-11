@@ -1,11 +1,12 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useSocket } from '../contexts/SocketContext';
 import '../styles/Buzzer.css';
 
 const Buzzer = () => {
   const [teamName, setTeamName] = useState('');
   const [isRegistering, setIsRegistering] = useState(true);
-  const { registerTeam, currentTeam, buzz, buzzerEnabled } = useSocket();
+  const [localBuzzed, setLocalBuzzed] = useState(false);
+  const { registerTeam, currentTeam, buzz, buzzerEnabled, socket } = useSocket();
 
   const handleRegister = (e) => {
     e.preventDefault();
@@ -16,8 +17,34 @@ const Buzzer = () => {
   };
 
   const handleBuzz = () => {
+    setLocalBuzzed(true);
     buzz();
   };
+  
+  // Reset localBuzzed when buzzers are reset or state changes
+  useEffect(() => {
+    if (!socket) return;
+    
+    const handleBuzzersReset = () => {
+      console.log('Buzzers reset event received');
+      setLocalBuzzed(false);
+    };
+    
+    const handleBuzzerStateChanged = (enabled) => {
+      console.log('Buzzer state changed event received:', enabled);
+      if (enabled) {
+        setLocalBuzzed(false);
+      }
+    };
+    
+    socket.on('buzzersReset', handleBuzzersReset);
+    socket.on('buzzerStateChanged', handleBuzzerStateChanged);
+    
+    return () => {
+      socket.off('buzzersReset', handleBuzzersReset);
+      socket.off('buzzerStateChanged', handleBuzzerStateChanged);
+    };
+  }, [socket]);
 
   if (isRegistering) {
     return (
@@ -48,16 +75,16 @@ const Buzzer = () => {
       </div>
 
       <button
-        className={`buzzer-button ${!buzzerEnabled ? 'disabled' : ''} ${currentTeam?.buzzed ? 'buzzed' : ''}`}
+        className={`buzzer-button ${!buzzerEnabled || localBuzzed || currentTeam?.buzzed ? 'disabled' : ''} ${currentTeam?.buzzed || localBuzzed ? 'buzzed' : ''}`}
         onClick={handleBuzz}
-        disabled={!buzzerEnabled || currentTeam?.buzzed}
+        disabled={!buzzerEnabled || localBuzzed || currentTeam?.buzzed}
       >
-        {currentTeam?.buzzed ? 'BUZZED!' : 'BUZZ'}
+        {currentTeam?.buzzed || localBuzzed ? 'BUZZED!' : 'BUZZ'}
       </button>
 
       <div className="status-message">
         {!buzzerEnabled && <p>Waiting for DJ to enable buzzers...</p>}
-        {currentTeam?.buzzed && <p>You've buzzed in! Wait for the DJ.</p>}
+        {(currentTeam?.buzzed || localBuzzed) && <p>You've buzzed in! Wait for the DJ.</p>}
       </div>
     </div>
   );
