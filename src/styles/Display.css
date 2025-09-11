@@ -76,30 +76,24 @@
   align-items: center;
   margin: 0 10px;
   transition: all 0.3s;
+  width: 100px; /* Default width */
 }
 
-.position-1 {
-  width: 120px;
-  height: 180px;
+/* Color classes for podium positions */
+.gold {
   background-color: #ffd700; /* Gold */
   z-index: 3;
-  order: 2;
+  width: 120px; /* Wider for gold */
 }
 
-.position-2 {
-  width: 100px;
-  height: 140px;
+.silver {
   background-color: #c0c0c0; /* Silver */
   z-index: 2;
-  order: 1;
 }
 
-.position-3 {
-  width: 100px;
-  height: 100px;
+.bronze {
   background-color: #cd7f32; /* Bronze */
   z-index: 1;
-  order: 3;
 }
 
 .position-number {
@@ -268,18 +262,11 @@
     height: 150px;
   }
   
-  .position-1 {
+  .podium-position {
+    width: 80px;
+  }
+  
+  .gold {
     width: 100px;
-    height: 140px;
-  }
-  
-  .position-2 {
-    width: 80px;
-    height: 110px;
-  }
-  
-  .position-3 {
-    width: 80px;
-    height: 80px;
   }
 }

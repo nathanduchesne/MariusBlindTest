@@ -11,6 +11,51 @@ const Display = () => {
   const topTeams = sortedTeams.slice(0, 3);
   // Get remaining teams
   const remainingTeams = sortedTeams.slice(3);
+  
+  // Calculate positions and heights for podium
+  const calculatePodiumData = () => {
+    if (topTeams.length === 0) return [];
+    
+    // Get the highest score (first team's score)
+    const highestScore = topTeams[0].score;
+    
+    // Create an array to track which teams are tied
+    const tiedPositions = {};
+    let currentPosition = 1;
+    
+    return topTeams.map((team, index) => {
+      // Calculate height percentage based on score compared to highest score
+      // Minimum height is 40% even if score is 0
+      const heightPercentage = highestScore > 0 
+        ? 40 + (team.score / highestScore * 60)
+        : 100;
+      
+      // Determine position (for ties)
+      if (index > 0 && team.score === topTeams[index - 1].score) {
+        // This team is tied with the previous team
+        currentPosition = currentPosition; // Keep the same position
+      } else if (index > 0) {
+        // Not tied, increment position
+        currentPosition = index + 1;
+      }
+      
+      // Track teams with the same position (ties)
+      if (!tiedPositions[currentPosition]) {
+        tiedPositions[currentPosition] = [];
+      }
+      tiedPositions[currentPosition].push(team.id);
+      
+      return {
+        ...team,
+        heightPercentage,
+        position: currentPosition,
+        // Teams tied for first get gold, teams tied for second get silver, etc.
+        colorClass: currentPosition === 1 ? 'gold' : currentPosition === 2 ? 'silver' : 'bronze'
+      };
+    });
+  };
+  
+  const podiumData = calculatePodiumData();
 
   return (
     <div className="display-container">
@@ -25,14 +70,18 @@ const Display = () => {
         <div className="scores-section">
           <h2>Leaderboard</h2>
           
-          {topTeams.length > 0 && (
+          {podiumData.length > 0 && (
             <div className="podium">
-              {topTeams.map((team, index) => (
+              {podiumData.map((team, index) => (
                 <div 
                   key={team.id} 
-                  className={`podium-position position-${index + 1}`}
+                  className={`podium-position position-${team.position} ${team.colorClass}`}
+                  style={{ 
+                    height: `${team.heightPercentage}%`,
+                    order: team.position === 1 ? 2 : team.position === 2 ? 1 : 3
+                  }}
                 >
-                  <div className="position-number">{index + 1}</div>
+                  <div className="position-number">{team.position}</div>
                   <div className="podium-team-name">{team.name}</div>
                   <div className="podium-team-score">{team.score}</div>
                 </div>
