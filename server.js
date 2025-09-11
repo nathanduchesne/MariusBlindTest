@@ -120,8 +120,10 @@ io.on('connection', (socket) => {
 
 // Serve static files in production
 if (process.env.NODE_ENV === 'production') {
+  // Serve static files from the 'dist' directory
   app.use(express.static(join(__dirname, 'dist')));
   
+  // For any other routes, serve the index.html file
   app.get('*', (req, res) => {
     res.sendFile(join(__dirname, 'dist', 'index.html'));
   });
