@@ -42,10 +42,16 @@ npm install concurrently --save-dev
 
 ## Running the App Locally
 
-To run both the server and client concurrently:
+To run both the server and client concurrently in development mode:
 
 ```
-npm start
+./start.sh
+```
+
+or
+
+```
+npm run dev:start
 ```
 
 This will start:
@@ -77,18 +83,70 @@ This will start:
 
 ## Deployment
 
-To deploy the application:
+You can deploy this application to various cloud platforms. Here are instructions for two popular options:
 
-1. Build the frontend:
+### Option 1: Render.com (Recommended)
+
+1. Create an account on [Render](https://render.com/) if you don't have one
+
+2. Click "New +" and select "Web Service"
+
+3. Connect your GitHub repository or use the "Public Git repository" option with your repo URL
+
+4. Fill in the following details:
+   - **Name**: mariage-marius (or your preferred name)
+   - **Environment**: Node
+   - **Build Command**: `npm install && npm run build`
+   - **Start Command**: `npm start`
+
+5. Select the free plan and click "Create Web Service"
+
+6. Your app will be deployed and available at a URL like `https://your-app-name.onrender.com`
+
+7. Share this URL with your friends to let them connect to your game
+
+### Option 2: Railway.app
+
+1. Create an account on [Railway](https://railway.app/) if you don't have one
+
+2. Create a new project and select "Deploy from GitHub repo"
+
+3. Connect your GitHub repository
+
+4. Add the following environment variables if needed:
+   - `PORT`: 3001 (or your preferred port)
+   - `NODE_ENV`: production
+
+5. Your app will be deployed and available at a Railway-provided URL
+
+### Option 3: Heroku
+
+1. Create an account on [Heroku](https://heroku.com/) if you don't have one
+
+2. Install the [Heroku CLI](https://devcenter.heroku.com/articles/heroku-cli)
+
+3. Login to Heroku and create a new app:
 ```
-npm run build
+heroku login
+heroku create mariage-marius
 ```
 
-2. The server is configured to serve the static files in production mode.
+4. Push your code to Heroku:
+```
+git push heroku main
+```
 
-3. Deploy to your hosting provider of choice (Heroku, Vercel, etc.)
+5. Your app will be available at `https://mariage-marius.herokuapp.com`
 
-4. Set the environment variable `PORT` if needed (defaults to 3001)
+### Using Your Own Domain
+
+If you have your own domain name, you can configure it with any of these services to use a custom URL instead of their provided subdomains.
+
+### Important Notes
+
+- The app uses WebSockets, so make sure your hosting provider supports them
+- Some free tiers may have limitations on connection time or may sleep after inactivity
+- For persistent, 24/7 availability, consider a paid tier on any of these platforms
 
 ## Future Enhancements
 

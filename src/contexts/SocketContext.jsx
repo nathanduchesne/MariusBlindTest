@@ -14,9 +14,7 @@ export const SocketProvider = ({ children }) => {
 
   useEffect(() => {
     // Connect to the WebSocket server
-    // In production, use relative URL which will connect to the same domain
-    const serverURL = import.meta.env.PROD ? '' : 'http://localhost:3001';
-    const socketInstance = io(serverURL);
+    const socketInstance = io('http://localhost:3001');
     setSocket(socketInstance);
 
     // Socket event listeners

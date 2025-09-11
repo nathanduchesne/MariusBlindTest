@@ -4,5 +4,5 @@ echo "Starting DJ Blind Test Game..."
 echo "Installing dependencies..."
 npm install
 
-echo "Starting server and client in development mode..."
-npm run dev:start
+echo "Starting server and client..."
+npm start
