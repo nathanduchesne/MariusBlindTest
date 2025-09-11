@@ -60,10 +60,7 @@ const Display = () => {
   return (
     <div className="display-container">
       <div className="display-header">
-        <h1>DJ Blind Test</h1>
-        <div className={`buzzer-status ${buzzerEnabled ? 'enabled' : 'disabled'}`}>
-          Buzzers: {buzzerEnabled ? 'ENABLED' : 'DISABLED'}
-        </div>
+        <h1>Marius and Anais Blind Test</h1>
       </div>
 
       <div className="display-content">
