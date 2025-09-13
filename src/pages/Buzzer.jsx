@@ -71,7 +71,6 @@ const Buzzer = () => {
     <div className="buzzer-container">
       <div className="team-info">
         <h2>{currentTeam?.name}</h2>
-        <p>Score: {currentTeam?.score}</p>
       </div>
 
       <button
